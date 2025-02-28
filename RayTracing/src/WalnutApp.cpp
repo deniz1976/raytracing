@@ -4,8 +4,8 @@
 #include "Walnut/Image.h"
 #include "Walnut/Timer.h"
 
-#include "../src/Renderer.h"
-#include "../src/Camera.h"
+#include "Renderer.h"
+#include "Camera.h"
 #include "Scene.h"
 
 #include <glm/gtc/type_ptr.hpp>
@@ -32,7 +32,7 @@ public:
 			sphere.Position = { 0.0f, 0.0f, 0.0f };
 			sphere.Radius = 1.0f;
 			sphere.MaterialIndex = 0;
-			m_Scene.Spheres.emplace_back(sphere);
+			m_Scene.Spheres.push_back(sphere);
 		}
 
 		{
@@ -40,13 +40,14 @@ public:
 			sphere.Position = { 0.0f, -101.0f, 0.0f };
 			sphere.Radius = 100.0f;
 			sphere.MaterialIndex = 1;
-			m_Scene.Spheres.emplace_back(sphere);
+			m_Scene.Spheres.push_back(sphere);
 		}
 	}
 
 	virtual void OnUpdate(float ts) override
 	{
-		m_Camera.OnUpdate(ts);
+		if (m_Camera.OnUpdate(ts))
+			m_Renderer.ResetFrameIndex();
 	}
 
 	virtual void OnUIRender() override
@@ -57,6 +58,12 @@ public:
 		{
 			Render();
 		}
+
+		ImGui::Checkbox("Accumulate", &m_Renderer.GetSettings().Accumulate);
+
+		if (ImGui::Button("Reset"))
+			m_Renderer.ResetFrameIndex();
+
 		ImGui::End();
 
 		ImGui::Begin("Scene");
