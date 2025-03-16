@@ -54,10 +54,10 @@ A real-time ray tracing engine built with C++ and Walnut UI framework. This proj
 - Walnut UI framework and dependencies
 
 ### Build Instructions 
-bash
-git clone https://github.com/yourusername/ray-tracing.git
-cd ray-tracing
-mkdir build
-cd build
-cmake ..
-cmake --build . --config Release
+- bash
+- git clone https://github.com/yourusername/ray-tracing.git
+- cd ray-tracing
+- mkdir build
+- cd build
+- cmake ..
+- cmake --build . --config Release
